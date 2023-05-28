@@ -1,0 +1,258 @@
+<%- include('partials/top'); %>
+<div class="box">
+<!--Map style-->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css">
+<style>
+    #maCarte{
+        height: 500px;
+    }
+</style>
+<!-- Map Start-->
+<div id="maCarte"></div>
+
+<!-- Fichiers Javascript -->
+<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+<div id='decorative-map' inert></div>
+<script src='https://unpkg.com/wicg-inert@latest/dist/inert.min.js'></script>
+<script>
+    
+    var villes = {
+        "sousse" : { "lat" : 35.8288, "lon" : 10.3207},
+        "doctor1" : { "lat" : 36.8288, "lon" : 11.5407},
+        "doctor2" : { "lat" : 33.8118, "lon" : 9.6407},
+        "doctor3" : { "lat" : 35.3288, "lon" : 10.007}
+    };
+    var tableauMarqueurs = [];
+    // On initialise la carte
+    var carte = L.map('maCarte').setView([35.8130,10.6390],8);
+    
+    // On charge les "tuiles"
+    L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+        // Il est toujours bien de laisser le lien vers la source des données
+        attribution: ' ©OpenStreetMap - Tunisia',
+        minZoom: 8,
+        maxZoom: 20
+    }).addTo(carte);
+    var marqueurs = L.markerClusterGroup();
+    // On personnalise le marqueur
+    var icone = L.icon({
+        iconUrl: "images/icone.png",
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50]
+    })
+    // On parcourt les différentes villes
+    for(ville in villes){
+           
+         var marker = L.marker([36.8065 ,10.1815],
+            {alt: 'doctor1'}).addTo(carte) // "Kyiv" is the accessible name of this marker
+            .bindPopup('<a href="/doctor" >doctor1<a>');
+            // On ajoute le marqueur au tableau 
+            tableauMarqueurs.push(marker);
+        // On crée le marqueur et on lui attribue une popup
+        var marker = L.marker([35.8130,10.6390],
+        {alt: 'patient'}).addTo(carte) // "Kyiv" is the accessible name of this marker
+        .bindPopup('ISSAT,sousse');
+        // On ajoute le marqueur au tableau
+        tableauMarqueurs.push(marker);
+        var marker = L.marker([35.8288,10.6407],
+        {alt: 'doctor3'}).addTo(carte) // "Kyiv" is the accessible name of this marker
+        .bindPopup('<a href="/doctor" >doctor2<a>');
+        // On ajoute le marqueur au tableau  
+        tableauMarqueurs.push(marker);
+        var marker = L.marker([36.8571, 10.3237],
+        {alt: 'doctor4'}).addTo(carte) // "Kyiv" is the accessible name of this marker
+        .bindPopup('<a href="/doctor" >doctor3<a>');
+        // On ajoute le marqueur au tableau
+        tableauMarqueurs.push(marker);
+        tableauMarqueurs.push(marker);
+        var marker = L.marker([ 33.8745, 10.8531],
+        {alt: 'doctor5'}).addTo(carte) // "Kyiv" is the accessible name of this marker
+        .bindPopup('<a href="/doctor" >doctor4<a>');
+        // On ajoute le marqueur au tableau
+        tableauMarqueurs.push(marker);
+        tableauMarqueurs.push(marker);
+        var marker = L.marker([33.9005, 10.0978],
+        {alt: 'doctor6'}).addTo(carte) // "Kyiv" is the accessible name of this marker
+        .bindPopup('<a href="/doctor" >doctor5<a>');
+        // On ajoute le marqueur au tableau
+        tableauMarqueurs.push(marker);
+        tableauMarqueurs.push(marker);
+        var marker = L.marker([36.8626, 11.0927],
+        {alt: 'doctor7'}).addTo(carte) // "Kyiv" is the accessible name of this marker
+        .bindPopup('<a href="/doctor" >doctor6<a>');
+        // On ajoute le marqueur au tableau
+        tableauMarqueurs.push(marker);
+        tableauMarqueurs.push(marker);
+        var marker = L.marker([36.0785, 10.438],
+        {alt: 'doctor8'}).addTo(carte) // "Kyiv" is the accessible name of this marker
+        .bindPopup('<a href="/doctor" >doctor7<a>');
+        // On ajoute le marqueur au tableau
+        tableauMarqueurs.push(marker);
+    }
+    
+    // On regroupe les marqueurs dans un groupe Leaflet
+    var groupe = new L.featureGroup(tableauMarqueurs);
+    // On adapte le zoom au groupe
+    carte.fitBounds(groupe.getBounds().pad(0.5));
+    carte.addLayer(marker);
+</script>
+
+
+<!-- Map End-->
+ <!-- Appointment Start -->
+ <div class="container-fluid bg-primary my-5 py-5">
+    <div class="container py-5">
+        <div class="row gx-5">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="mb-4">
+                    <h5 class="d-inline-block text-white text-uppercase border-bottom border-5">Appointment</h5>
+                    <h1 class="display-4">Make An Appointment For Your Family</h1>
+                </div>
+                <p class="text-white mb-5">Eirmod sed tempor lorem ut dolores. Aliquyam sit sadipscing kasd ipsum. Dolor ea et dolore et at sea ea at dolor, justo ipsum duo rebum sea invidunt voluptua. Eos vero eos vero ea et dolore eirmod et. Dolores diam duo invidunt lorem. Elitr ut dolores magna sit. Sea dolore sanctus sed et. Takimata takimata sanctus sed.</p>
+                <a class="btn btn-dark rounded-pill py-3 px-5 me-3" href="">Find Doctor</a>
+                <a class="btn btn-outline-dark rounded-pill py-3 px-5" href="">Read More</a>
+            </div>
+            <div class="col-lg-6">
+                <div class="bg-white text-center rounded p-5">
+                    <h1 class="mb-4">Book An Appointment</h1>
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-12 col-sm-6">
+                                <select class="form-select bg-light border-0" style="height: 55px;">
+                                    <option selected>Choose Department</option>
+                                    <option value="1">Department 1</option>
+                                    <option value="2">Department 2</option>
+                                    <option value="3">Department 3</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <select class="form-select bg-light border-0" style="height: 55px;">
+                                    <option selected>Select Doctor</option>
+                                    <option value="1">Doctor 1</option>
+                                    <option value="2">Doctor 2</option>
+                                    <option value="3">Doctor 3</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <input type="text" class="form-control bg-light border-0" placeholder="Your Name" style="height: 55px;">
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <input type="email" class="form-control bg-light border-0" placeholder="Your Email" style="height: 55px;">
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="date" id="date" data-target-input="nearest">
+                                    <input type="text"
+                                        class="form-control bg-light border-0 datetimepicker-input"
+                                        placeholder="Date" data-target="#date" data-toggle="datetimepicker" style="height: 55px;">
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="time" id="time" data-target-input="nearest">
+                                    <input type="text"
+                                        class="form-control bg-light border-0 datetimepicker-input"
+                                        placeholder="Time" data-target="#time" data-toggle="datetimepicker" style="height: 55px;">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100 py-3" type="submit">Make An Appointment</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Appointment End -->
+</div>
+<%- include('partials/navbarre'); %>
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light mt-5 py-5">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">Get In Touch</h4>
+                    <p class="mb-4">No dolore ipsum accusam no lorem. Invidunt sed clita kasd clita et et dolor sed dolor</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>123 Street, New York, USA</p>
+                    <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>info@example.com</p>
+                    <p class="mb-0"><i class="fa fa-phone-alt text-primary me-3"></i>+012 345 67890</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">Quick Links</h4>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Home</a>
+                        <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>About Us</a>
+                        <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Our Services</a>
+                        <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Meet The Team</a>
+                        <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Latest Blog</a>
+                        <a class="text-light" href="#"><i class="fa fa-angle-right me-2"></i>Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">Popular Links</h4>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Home</a>
+                        <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>About Us</a>
+                        <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Our Services</a>
+                        <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Meet The Team</a>
+                        <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Latest Blog</a>
+                        <a class="text-light" href="#"><i class="fa fa-angle-right me-2"></i>Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">Newsletter</h4>
+                    <form action="">
+                        <div class="input-group">
+                            <input type="text" class="form-control p-3 border-0" placeholder="Your Email Address">
+                            <button class="btn btn-primary">Sign Up</button>
+                        </div>
+                    </form>
+                    <h6 class="text-primary text-uppercase mt-4 mb-3">Follow Us</h6>
+                    <div class="d-flex">
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid bg-dark text-light border-top border-secondary py-4">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-md-0">&copy; <a class="text-primary" href="#">Your Site Name</a>. All Rights Reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">Designed by <a class="text-primary" href="https://htmlcodex.com">HTML Codex</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

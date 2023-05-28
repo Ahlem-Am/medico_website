@@ -1,0 +1,56 @@
+first step:
+* create an image for prediction disease service:
+# docker build --tag predictionDisease .
+* tag the docker image
+  # docker tag predictionDisease predictionDisease-local-image
+* create an image for medical record service :
+# docker build --tag medicalrecord .
+* tag the docker image
+  # docker tag medicalrecord medicalrecord-local-image
+* create an image for web service 
+# docker build --tag web .
+* tag the docker image
+  # docker tag web web-local-image
+
+second step:
+*create default.config for nginx configuration
+*create the docker-compose file:
+*build the  containers 
+# docker compose up
+
+version: '3'
+services:
+  web:
+    image: web-local-image
+    ports:
+      - "3030:3000"
+
+  medicalrecords:
+    image: medicalrecords-local-image
+    ports:
+      - "3000:3000"
+    
+    
+
+  diseaseprediction:
+    image: prediction-local-image
+    ports:
+      - "8000:3000"
+  
+    
+
+  
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./web/views:/srv/www/static
+
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - web
+      - medicalrecords
+      - diseaseprediction
+    

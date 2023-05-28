@@ -1,0 +1,108 @@
+<%- include('../partials/top_prediction'); %>
+    <% if(alert){%>
+        <div id="alertMessage" class="alert alert-danger" >
+            <%= alert%>
+        </div>
+    <%}%>
+<script>
+    function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah')
+                        .attr('src', e.target.result)
+                        .width(500)
+                        .height(500);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+</script>
+
+<div class="row"  style="margin-bottom: 300px;">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <center><h1>Malaria Predictor</h1></center>
+        <div class="card card-body">
+            <center><h3>Please upload the image of the cell</h3></center>
+            <form class="form-horizontal" method="post" action="http://127.0.0.1:3030/Malaria/predictByimg" id="Form" enctype="multipart/form-data">
+                <center>
+                <input onchange="readURL(this);" type="file" name="image" placeholder="Upload Image">
+                <br>
+                <br>
+                <img class="img-fluid" id="blah" src="#" alt="UPLOADED IMAGE WILL APPEAR HERE" />
+                <br>
+                <br>
+                <input class="btn btn-info" type="submit">
+                </center>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+<script>
+    /*document.getElementById('Form').addEventListener('submit', (e) => {  
+        event.preventDefault();
+  let data = new FormData();
+  const image = e.target.files[0];
+ 
+  data.append('image', image);
+    
+    console.log('hello')    // TODO do something here to show user that form is being submitted
+    fetch("http://127.0.0.1:5000/malariapredict",{
+        method: 'POST',
+        mode: "no-cors",
+      headers: {
+    'Access-Control-Allow-Origin':'*'},
+        body: data // event.target is the form
+    }).then((response) => {
+        if (!response.ok) {
+          console.log(response);
+        }
+        return response.json(); // or response.text() or whatever the server sends
+    }).then((body) => {
+        // TODO handle body
+        console.log(body)    })
+        .catch((error) => {
+            console.log(error) 
+    });
+});
+
+
+/*
+    Form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    var myHeaders = new Headers();
+myHeaders.append("Accept", "application/json");
+myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJh");
+    const formData = new FormData();
+    const fileField = document.querySelector('input[type="file"]');
+    console.log(fileField.input)
+    formData.append("image", fileField);
+    const response = fetch("http://127.0.0.1:5000/malariapredict", {
+      method: "Post",
+      headers: myHeaders,
+      mode: "no-cors",
+      body: formData,
+    }).then(res=>res.json())
+    .then((res)=>{
+        console.log(res)
+        localStorage.setItem('alert',res.message)
+    window.location("predict.ejs")
+    })
+  
+
+    
+  . catch ((error) =>
+    console.error("Error:", error))
+  }
+
+    )
+
+
+
+
+</script>
+<%- include('../partials/bottom_prediction'); %>

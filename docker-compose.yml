@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+    web:
+        image: web
+        ports: 
+        - "3030:3030"
+      
+    medicalrecord:
+      image: medical_record
+      ports:
+        - "3000:3000"
+    
+    predictiondisease:
+      image: prediction_disease
+      ports:
+        - "5000:5000"
+
+    mysqldb:
+      image: mysql:5.7
+      restart: unless-stopped
+      env_file: .env
+      environment:
+        - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+        - MYSQL_DATABASE=$MYSQLDB_DATABASE
+      ports:
+        - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+      volumes:
+        - db:/var/lib/mysql
+    auth:
+      depends_on:
+        - mysqldb
+      build: ./authnode
+      restart: unless-stopped
+      env_file: .env
+      ports:
+        - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+      environment:
+        - DB_HOST=mysqldb
+        - DB_USER=$MYSQLDB_USER
+        - DB_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+        - DB_NAME=$MYSQLDB_DATABASE
+        - DB_PORT=$MYSQLDB_DOCKER_PORT
+      stdin_open: true
+      tty: true
+
+    nginx:
+      image: nginx:1.23.3
+      ports:
+        - "8080:8080"
+      volumes:
+        - ./default.conf:/etc/nginx/conf.d/default.conf
+      depends_on:
+        - web
+        - medicalrecord
+        - predictiondisease
+        - auth
+        - mysqldb
+volumes: 
+  db:
+    
+
+    
+

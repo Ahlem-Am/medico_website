@@ -1,0 +1,61 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="row gx-5">
+        <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
+            <div class="position-relative h-100">
+                <img class="position-absolute w-100 h-100 rounded" src="{{ url_for('static', filename = 'img/about.jpg')}}" style="object-fit: cover;">
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="mb-4">
+                <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Medico</h5>
+                <h1 class="display-4">Best Medical Care For Yourself and Your Family</h1>
+            </div>
+            <div class="row g-3 pt-3">
+                <div class="col-sm-3 col-6">
+                    <div class="bg-light text-center rounded-circle py-4">
+                        <i class="fa fa-3x fa-user-md text-primary mb-3"></i>
+                        <h6 class="mb-0"><small class="d-block text-primary">Coronary artery disease</small></h6>
+                    </div>
+                </div>
+                        
+                            <div class="col-sm-9 col-4">
+                                <p> Coronary artery disease, also known as coronary heart disease, is the most common type of heart disease. It develops when the arteries that supply blood to the heart become clogged with plaque. This causes them to harden and narrow. Plaque contains cholesterol and other substances.</p>
+                             <h5>Symptoms</h5>
+                            <ul>
+                                <li>chest pain</li>
+                                <li>breathlessness</li>
+                                <li>heart palpitations</li>
+                                <li>nausea</li>
+                                <li>stomach pain</li>
+                                <li>sweating</li>
+                                <li>arm, jaw, back, or leg pain</li>
+                                <li>a choking sensation</li>
+                                <li>swollen ankles</li>
+                                <li>fatigue</li>
+                                <li>an irregular heartbeat</li>
+                               
+                            </ul>
+                        
+                           
+                            </div>
+                            <div class="row g-3 pt-3">
+                            <div class="col-sm-3 col-6">
+
+                            </div>
+                            <div class="col-sm-9 col-4">
+                                <a href="http://127.0.0.1:5000/heart_pedict" class="btn btn-primary w-100 py-3" type="submit">Make Prediction</a>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    
+                   
+                   
+                        </div>
+                  
+                        {% endblock %}
