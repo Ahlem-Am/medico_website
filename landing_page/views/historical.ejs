@@ -1,0 +1,54 @@
+
+
+<%- include('partials/top'); %>
+<div style="background-color: transparent;">
+<div class="box" style="background-color: white">
+<div class="content read " style="background-color: white;margin-top: 8rem;">
+       
+    <table>
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td >Medecin Name</td>
+                    <td>Speciality</td>
+                    <td>Date</td>
+                    <td>Status</td>
+                    <td></td>
+                </tr>
+            </thead>
+            
+                <tr>
+                    <td  name="idDoctor">1</td>
+                    <td  name="idDoctor">Doctor 1</td>
+                    <td name="speciality">Cardiology</td>
+                    <td name="date">09/05/2023:11H</td>          
+                    <td name="status" style="color: #42e333;">validé</td>
+                    <td  
+                    class="actions" name="delete">
+                        <a href="" class="trash"><i class="fas fa-trash fa-xs"></i></a>
+                    </td>
+                </tr>  
+                <tr>
+                    <td  name="idDoctor">3</td>
+                    <td  name="idDoctor">Doctor 1</td>
+                    <td name="speciality">Radiology</td>
+                    <td name="date">15/05/2023</td>          
+                    <td name="status" style="color: #e33333;">en cours</td>
+                    <td 
+                    class="actions" name="delete">
+                        <a href="" class="trash"><i class="fas fa-trash fa-xs"></i></a>
+                    </td>
+                </tr>  
+            
+        </table>
+   <!-- <div class="pagination">
+        
+        <a href="#"><i class="fas fa-angle-double-right fa-sm"></i></a>
+    </div>-->
+
+</div>
+</div>
+<%- include('partials/navbarre'); %>
+
+</body>
+</html>
